@@ -13,8 +13,8 @@
   "main": "./extension.js",
   "contributes": {
     "commands": [{
-      "command": "procon.helloWorld",
-      "title": "Hello World"
+      "command": "procon.copy",
+      "title": "Copy For Procon"
     }]
   },
   "scripts": {
