@@ -38,6 +38,9 @@ function activate(context) {
 				const libLines = lib.split('\n').filter((libLine) => {
 					return !libLine.match(/^\s*#/);
 				});
+				if (libLines[libLines.length - 1] == '\n') {
+					libLines.pop()
+				}
 
 				lines.splice(index, 1, ...libLines);
 				return true;
