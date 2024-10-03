@@ -20,20 +20,29 @@ function activate(context) {
 		const text = document.getText();
 		const lines = text.split('\n');
 
+		const set = new Set()
+
 		for (;;) {
 			let hit = false;
 			lines.some((line, index) => {
 				const m = line.match(/^require "(.*)"/);
 				if (!m) {
-					return;
+					return false;
 				}
 
 				const file = m[1];
 				if (!file.startsWith('procon')) {
-					return;
+					return false;
 				}
 
 				hit = true;
+
+				if (set.has(file)) {
+					lines.splice(index, 1)
+					return false;
+				}
+				set.add(file);
+
 				const lib = fs.readFileSync(libDir + '/' + file + '.cr', 'utf-8');
 				const libLines = lib.split('\n').filter((libLine) => {
 					return !libLine.match(/^\s*#/);
